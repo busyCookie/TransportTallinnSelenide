@@ -1,3 +1,5 @@
+package mainPage;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/SeleniumTests/SeleneseIT.java to edit this template
@@ -5,19 +7,23 @@
 
 //JUnit
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 //Selenium
-import org.openqa.selenium.*;
+//import org.openqa.selenium.*;
 //Selenide
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.junit5.TextReportExtension;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 
 /**
  *
- * @author mandrake
+ * @author busyCookie
  */
+@ExtendWith({TextReportExtension.class})
 public class MainPageTest {
-    
+  
     @Test
     public void openTransportTallinn() {
         open("https://transport.tallinn.ee//");
