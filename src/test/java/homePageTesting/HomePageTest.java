@@ -8,13 +8,14 @@ package homePageTesting;
 
 
 //Selenide
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.WebElementCondition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebElementCondition;
 import static com.codeborne.selenide.Condition.and;
 import static com.codeborne.selenide.Condition.be;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selenide.refresh;
 
 //JUnit
@@ -87,15 +88,15 @@ public class HomePageTest {
     @Order(2)
     public void DefaultLanguage () {
         //$("#divHeader").shouldHave(Condition.text("Avaleht"));
-        homePage.title.shouldHave(Condition.text("Avaleht"));
-        homePage.title.shouldNotHave(Condition.text("Home page"));
-        homePage.title.shouldNotHave(Condition.text("Pääsivu"));
-        homePage.title.shouldNotHave(Condition.text("Домашняя страницa"));
+        homePage.title.shouldHave(exactText("Avaleht"));
+        homePage.title.shouldNotHave(text("Home page"));
+        homePage.title.shouldNotHave(text("Pääsivu"));
+        homePage.title.shouldNotHave(text("Домашняя страницa"));
         //German version of the page uses engish "Home page" instead of correct "Startseite".
-        homePage.title.shouldNotHave(Condition.text("Startseite")); 
-        homePage.title.shouldNotHave(Condition.text("Pradinis puslapis"));
+        homePage.title.shouldNotHave(text("Startseite")); 
+        homePage.title.shouldNotHave(text("Pradinis puslapis"));
         //Latvian version of the page uses engish "Home page" instead of correct "Sākumslapa".
-        homePage.title.shouldNotHave(Condition.text("Sākumlapa"));
+        homePage.title.shouldNotHave(text("Sākumlapa"));
         
     }
 }
