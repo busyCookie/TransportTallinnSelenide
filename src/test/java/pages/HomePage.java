@@ -19,11 +19,4 @@ public class HomePage extends BasePage {
     public SelenideElement transportMenu = areaMenu.find(byClassName("transport-navigation"));
     public SelenideElement travelPlanner = $("#divContentIndex.travel-planner");
     
-    /*
-    public HomePage open(String address) {
-        open(address);
-        return this;
-    }
-    */
-    
 }

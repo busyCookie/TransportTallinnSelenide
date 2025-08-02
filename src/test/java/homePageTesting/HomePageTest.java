@@ -1,9 +1,21 @@
-package mainPage;
+package homePageTesting;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/SeleniumTests/SeleneseIT.java to edit this template
  */
+
+
+
+//Selenide
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.WebElementCondition;
+import com.codeborne.selenide.Configuration;
+import static com.codeborne.selenide.Condition.and;
+import static com.codeborne.selenide.Condition.be;
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.refresh;
 
 //JUnit
 //import org.junit.jupiter.api.*;
@@ -15,17 +27,9 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import com.codeborne.selenide.junit5.TextReportExtension;
+
 //Selenium
 //import org.openqa.selenium.*;
-//Selenide
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-//import static com.codeborne.selenide.Selenide.*;
-//import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.refresh;
-
 
 
 //local
@@ -41,6 +45,8 @@ import pages.HomePage;
 public class HomePageTest {
     private static HomePage homePage = new HomePage();
     
+    public static WebElementCondition bePresent = and("be present", exist, be(visible));
+    
     @BeforeAll
     public static void SetUp() {
        //HomePage;
@@ -52,7 +58,7 @@ public class HomePageTest {
     @AfterEach
     public void RefrehsPage() {
         //not really needed yet, but shoul be prudent to reduce flakiness
-        //in futer more complicated tests
+        //in future more complicated tests
         refresh();
     }
     
@@ -60,19 +66,20 @@ public class HomePageTest {
     @Order(1)
     public void HomePageContent() {    
         //check that home page is loaded
-        homePage.homePageBody.should(exist).shouldBe(visible);
+        homePage.homePageBody.should(bePresent);
         
-        homePage.title.should(exist).shouldBe(visible);
-        homePage.lanugageSelection.should(exist).shouldBe(visible);
-        homePage.sidebar.should(exist).shouldBe(visible);
-        homePage.areaMenu.should(exist).shouldBe(visible);
-        homePage.transportMenu.should(exist).shouldBe(visible);
-        homePage.travelPlanner.should(exist).shouldBe(visible);
-        homePage.transportMenu.should(exist).shouldBe(visible);
-        homePage.mainMenu.should(exist).shouldBe(visible);
-        homePage.infoMenu.should(exist).shouldBe(visible);
-        homePage.travelPlanner.should(exist).shouldBe(visible);
-        homePage.map.should(exist).shouldBe(visible);
+        //homePage.title.should(exist).shouldBe(visible);
+        homePage.title.should(bePresent);
+        homePage.lanugageSelection.should(bePresent);
+        homePage.sidebar.should(bePresent);
+        homePage.areaMenu.should(bePresent);
+        homePage.transportMenu.should(bePresent);
+        homePage.travelPlanner.should(bePresent);
+        homePage.transportMenu.should(bePresent);
+        homePage.mainMenu.should(bePresent);
+        homePage.infoMenu.should(bePresent);
+        homePage.travelPlanner.should(bePresent);
+        homePage.map.should(bePresent);
         
     }
     

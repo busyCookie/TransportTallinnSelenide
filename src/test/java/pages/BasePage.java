@@ -5,13 +5,10 @@
 package pages;
 
 //Selenide
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selectors.byId;
-import com.codeborne.selenide.Selenide;
-
-
-
 
 /**
  *
@@ -26,10 +23,9 @@ public class BasePage {
     public SelenideElement mainMenu = sidebar.find(byId("mainMenu"));
     public SelenideElement infoMenu = sidebar.find(byId("infoMenu"));
     public SelenideElement map = $("#divMapWrapper");
-    
+  
     public BasePage open() {
         Selenide.open("/");
         return this;
     }
-   
 }
