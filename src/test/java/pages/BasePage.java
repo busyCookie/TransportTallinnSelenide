@@ -19,13 +19,19 @@ public class BasePage {
     public SelenideElement title = $("#divTitle");
     public SelenideElement lanugageSelection = $("#divHeader").find(byId("divLang"));
     public SelenideElement sidebar = $("#sidebar");
-    public SelenideElement areaMenu = sidebar.find(byId("areaMenuContainer"));    
+    public SelenideElement areaMenu = sidebar.find(byId("areaMenuContainer"));
+    public SelenideElement homeButton = areaMenu.$(".icon_home");
     public SelenideElement mainMenu = sidebar.find(byId("mainMenu"));
     public SelenideElement infoMenu = sidebar.find(byId("infoMenu"));
     public SelenideElement map = $("#divMapWrapper");
   
     public BasePage open() {
         Selenide.open("/");
+        return this;
+    }
+         
+   public BasePage refresh() {
+        Selenide.refresh();
         return this;
     }
 }

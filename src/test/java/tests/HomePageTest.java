@@ -6,32 +6,31 @@ package tests;
  */
 
 
-
 //Selenide
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebElementCondition;
+import com.codeborne.selenide.WebDriverRunner;
+import static com.codeborne.selenide.Selenide.webdriver;
 import static com.codeborne.selenide.Condition.and;
 import static com.codeborne.selenide.Condition.be;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Selenide.refresh;
+import static com.codeborne.selenide.WebDriverConditions.url;
 
 //JUnit
 //import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import com.codeborne.selenide.junit5.TextReportExtension;
 
 //Selenium
 //import org.openqa.selenium.*;
-
 
 //local
 import pages.HomePage;
@@ -44,6 +43,7 @@ import pages.HomePage;
 @ExtendWith({TextReportExtension.class})
 @TestMethodOrder(OrderAnnotation.class)
 public class HomePageTest {
+    private String current_url;
     private static HomePage homePage = new HomePage();
     
     public static WebElementCondition bePresent = and("be present", exist, be(visible));
@@ -51,21 +51,25 @@ public class HomePageTest {
     @BeforeAll
     public static void SetUp() {
        //HomePage;
-        Configuration.baseUrl = "https://transport.tallinn.ee/";
+        Configuration.baseUrl = "https://transport.tallinn.ee";
         homePage.open();
         
     }
     
     @AfterEach
-    public void RefrehsPage() {
-        //not really needed yet, but shoul be prudent to reduce flakiness
-        //in future more complicated tests
-        refresh();
+    public void ReturnToTestPage() {
+        current_url = WebDriverRunner.url();
+
+        if ( !current_url.equals(Configuration.baseUrl + "/") && !current_url.equals(Configuration.baseUrl + "/#/ee") ) {
+            homePage.homeButton.click();
+        }
     }
     
     @Test
     @Order(1)
-    public void HomePageContent() {    
+    public void HomePageContent() {
+        webdriver().shouldHave(url("https://transport.tallinn.ee/"));
+                
         //check that home page is loaded
         homePage.homePageBody.should(bePresent);
         
@@ -74,6 +78,7 @@ public class HomePageTest {
         homePage.lanugageSelection.should(bePresent);
         homePage.sidebar.should(bePresent);
         homePage.areaMenu.should(bePresent);
+        homePage.homeButton.should(bePresent);
         homePage.transportMenu.should(bePresent);
         homePage.travelPlanner.should(bePresent);
         homePage.transportMenu.should(bePresent);
@@ -86,9 +91,33 @@ public class HomePageTest {
     
     @Test
     @Order(2)
+    public void HomeButton() {
+        homePage.homeButton.click();
+        webdriver().shouldHave(url(Configuration.baseUrl + "/#/ee"));
+        
+        //check that home page is loaded
+        homePage.homePageBody.should(bePresent);
+        
+        //homePage.title.should(exist).shouldBe(visible);
+        homePage.title.should(bePresent);
+        homePage.lanugageSelection.should(bePresent);
+        homePage.sidebar.should(bePresent);
+        homePage.areaMenu.should(bePresent);
+        homePage.homeButton.should(bePresent);
+        homePage.transportMenu.should(bePresent);
+        homePage.travelPlanner.should(bePresent);
+        homePage.transportMenu.should(bePresent);
+        homePage.mainMenu.should(bePresent);
+        homePage.infoMenu.should(bePresent);
+        homePage.travelPlanner.should(bePresent);
+        homePage.map.should(bePresent);    
+    }
+    
+    @Test
+    @Order(3)
     public void DefaultLanguage () {
         //$("#divHeader").shouldHave(Condition.text("Avaleht"));
-        homePage.title.shouldHave(exactText("Avaleht"));
+        homePage.title.shouldHave(text("Avaleht"));
         homePage.title.shouldNotHave(text("Home page"));
         homePage.title.shouldNotHave(text("Pääsivu"));
         homePage.title.shouldNotHave(text("Домашняя страницa"));
