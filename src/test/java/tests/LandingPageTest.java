@@ -1,10 +1,8 @@
-package tests;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/SeleniumTests/SeleneseIT.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
+package tests;
 
 /*
  * Using mostly specific imports, since this reduces chance of potential
@@ -19,31 +17,26 @@ import static com.codeborne.selenide.Condition.and;
 import static com.codeborne.selenide.Condition.be;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.WebDriverConditions.url;
 
 //JUnit
 //import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import com.codeborne.selenide.junit5.TextReportExtension;
 
 //local
 import pages.HomePage;
-
 
 /**
  *
  * @author busyCookie
  */
-@ExtendWith({TextReportExtension.class})
-@TestMethodOrder(OrderAnnotation.class)
-public class HomePageTest {
+
+//Lnading open Home page in estonian language, but does not use same URL logic as every other page.
+//so, it gets a separate specifc test. that works correctly.
+public class LandingPageTest {
     private static HomePage homePage = new HomePage();
     
     public static WebElementCondition bePresent = and("be present", exist, be(visible));
@@ -51,17 +44,9 @@ public class HomePageTest {
     @BeforeAll
     public static void SetUp() {
        //HomePage;
-        Configuration.baseUrl = "https://transport.tallinn.ee/#/ee";
+        Configuration.baseUrl = "https://transport.tallinn.ee/";
         homePage.open();
         
-    }
-    
-    @AfterEach
-    public void ReturnToTestPage() {
-
-        if ( !WebDriverRunner.url().equals(Configuration.baseUrl) ) {
-            homePage.homeButton.click();
-        }
     }
     
     @Test
@@ -85,39 +70,6 @@ public class HomePageTest {
         homePage.infoMenu.should(bePresent);
         homePage.travelPlanner.should(bePresent);
         homePage.map.should(bePresent);
-        
-    }
-    
-    @Test
-    @Order(2)
-    public void RoutesSearch() {
-        //for now tested with local variables
-        //should be updated to use test data in future
-        
-        homePage.lineSearchInput.should(exist);
-        homePage.lineSearchInput.val("viru");
-        homePage.lineSerachResult.should(bePresent);
-        homePage.lineSerachResultsTallinnCount.shouldHave(text("(20)"));
-        homePage.lineSerachResultsTallinnStopsCount.shouldHave(text("(8)"));
-        homePage.lineSerachResultsTallinnRoutesCount.shouldHave(text("(12)"));
-        
-        
-        
-    }
-    
-    @Test
-    @Order(10)
-    public void DefaultLanguage () {
-        //$("#divHeader").shouldHave(Condition.text("Avaleht"));
-        homePage.title.shouldHave(text("Avaleht"));
-        homePage.title.shouldNotHave(text("Home page"));
-        homePage.title.shouldNotHave(text("Pääsivu"));
-        homePage.title.shouldNotHave(text("Домашняя страницa"));
-        //German version of the page uses engish "Home page" instead of correct "Startseite".
-        homePage.title.shouldNotHave(text("Startseite")); 
-        homePage.title.shouldNotHave(text("Pradinis puslapis"));
-        //Latvian version of the page uses engish "Home page" instead of correct "Sākumslapa".
-        homePage.title.shouldNotHave(text("Sākumlapa"));
         
     }
 }

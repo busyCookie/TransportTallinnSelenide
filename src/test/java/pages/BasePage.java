@@ -26,7 +26,7 @@ public class BasePage {
     public SelenideElement map = $("#divMapWrapper");
   
     public BasePage open() {
-        Selenide.open("/");
+        Selenide.open("");
         return this;
     }
          
