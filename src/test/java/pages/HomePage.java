@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pages;
 
 //Selenide
@@ -10,9 +6,9 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selectors.byTitle;
 import static com.codeborne.selenide.Selectors.byClassName;
+import static com.codeborne.selenide.Selectors.byId;
 
-
-
+import pages.BasePage;
 
 
 /**
@@ -29,6 +25,10 @@ public class HomePage extends BasePage {
     public SelenideElement lineSerachResultsTallinnCount = lineSerachResult.find(byTitle("Tallinna Transport"));
     public SelenideElement lineSerachResultsTallinnStopsCount = lineSerachResult.find(byClassName("stops-number"));
     public SelenideElement lineSerachResultsTallinnRoutesCount = lineSerachResult.find(byClassName("routes-number"));
+    
+    static {
+        returnButton = homeButton;
+    }
     
     //public SelenideElement lineSearchButton = $("#divContentIndex.travel-planner");
     
