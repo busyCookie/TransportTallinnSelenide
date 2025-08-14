@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tests;
 
 /*
@@ -11,7 +7,6 @@ package tests;
 //Selenide
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebElementCondition;
-import com.codeborne.selenide.WebDriverRunner;
 import static com.codeborne.selenide.Selenide.webdriver;
 import static com.codeborne.selenide.Condition.and;
 import static com.codeborne.selenide.Condition.be;
@@ -22,8 +17,6 @@ import static com.codeborne.selenide.WebDriverConditions.url;
 //JUnit
 //import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Order;
 
 //local
@@ -36,17 +29,16 @@ import pages.HomePage;
 
 //Lnading open Home page in estonian language, but does not use same URL logic as every other page.
 //so, it gets a separate specifc test. that works correctly.
-public class LandingPageTest {
-    private static HomePage homePage = new HomePage();
+public class LandingPageTest extends BaseTest {
+    private static HomePage landingPage;
     
     public static WebElementCondition bePresent = and("be present", exist, be(visible));
     
-    @BeforeAll
-    public static void SetUp() {
-       //HomePage;
-        Configuration.baseUrl = "https://transport.tallinn.ee/";
-        homePage.open();
-        
+    static {
+        //landing page just uses HomePage, so it does not requre a searate page classe to describe it
+        currentPage = new HomePage();
+        landingPage = (HomePage) currentPage;
+        Configuration.baseUrl = "https://transport.tallinn.ee/";   
     }
     
     @Test
@@ -55,21 +47,21 @@ public class LandingPageTest {
         webdriver().shouldHave(url(Configuration.baseUrl));
                 
         //check that home page is loaded
-        homePage.homePageBody.should(bePresent);
+        landingPage.homePageBody.should(bePresent);
         
         //homePage.title.should(exist).shouldBe(visible);
-        homePage.title.should(bePresent);
-        homePage.lanugageSelection.should(bePresent);
-        homePage.sidebar.should(bePresent);
-        homePage.areaMenu.should(bePresent);
-        homePage.homeButton.should(bePresent);
-        homePage.transportMenu.should(bePresent);
-        homePage.travelPlanner.should(bePresent);
-        homePage.transportMenu.should(bePresent);
-        homePage.mainMenu.should(bePresent);
-        homePage.infoMenu.should(bePresent);
-        homePage.travelPlanner.should(bePresent);
-        homePage.map.should(bePresent);
+        landingPage.title.should(bePresent);
+        landingPage.lanugageSelection.should(bePresent);
+        landingPage.sidebar.should(bePresent);
+        landingPage.areaMenu.should(bePresent);
+        landingPage.homeButton.should(bePresent);
+        landingPage.transportMenu.should(bePresent);
+        landingPage.travelPlanner.should(bePresent);
+        landingPage.transportMenu.should(bePresent);
+        landingPage.mainMenu.should(bePresent);
+        landingPage.infoMenu.should(bePresent);
+        landingPage.travelPlanner.should(bePresent);
+        landingPage.map.should(bePresent);
         
     }
 }

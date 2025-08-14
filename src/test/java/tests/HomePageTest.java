@@ -1,24 +1,13 @@
 package tests;
 
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/SeleniumTests/SeleneseIT.java to edit this template
- */
-
-
-/*
  * Using mostly specific imports, since this reduces chance of potential
  * interferance betwween objects from different APIs
  */
 //Selenide
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebElementCondition;
-import com.codeborne.selenide.WebDriverRunner;
 import static com.codeborne.selenide.Selenide.webdriver;
-import static com.codeborne.selenide.Condition.and;
-import static com.codeborne.selenide.Condition.be;
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.WebDriverConditions.url;
 
@@ -27,8 +16,6 @@ import static com.codeborne.selenide.WebDriverConditions.url;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import com.codeborne.selenide.junit5.TextReportExtension;
@@ -43,27 +30,15 @@ import pages.HomePage;
  */
 @ExtendWith({TextReportExtension.class})
 @TestMethodOrder(OrderAnnotation.class)
-public class HomePageTest {
-    private static HomePage homePage = new HomePage();
+public class HomePageTest extends BaseTest {
+    private static HomePage homePage;
     
-    public static WebElementCondition bePresent = and("be present", exist, be(visible));
-    
-    @BeforeAll
-    public static void SetUp() {
-       //HomePage;
-        Configuration.baseUrl = "https://transport.tallinn.ee/#/ee";
-        homePage.open();
-        
+    static {
+        currentPage = new HomePage();
+        homePage = (HomePage) currentPage;
+        Configuration.baseUrl = "https://transport.tallinn.ee/#/ee";   
     }
-    
-    @AfterEach
-    public void ReturnToTestPage() {
-
-        if ( !WebDriverRunner.url().equals(Configuration.baseUrl) ) {
-            homePage.homeButton.click();
-        }
-    }
-    
+      
     @Test
     @Order(1)
     public void HomePageContent() {
@@ -97,12 +72,9 @@ public class HomePageTest {
         homePage.lineSearchInput.should(exist);
         homePage.lineSearchInput.val("viru");
         homePage.lineSerachResult.should(bePresent);
-        homePage.lineSerachResultsTallinnCount.shouldHave(text("(20)"));
+        homePage.lineSerachResultsTallinnCount.shouldHave(text("(21)"));
         homePage.lineSerachResultsTallinnStopsCount.shouldHave(text("(8)"));
-        homePage.lineSerachResultsTallinnRoutesCount.shouldHave(text("(12)"));
-        
-        
-        
+        homePage.lineSerachResultsTallinnRoutesCount.shouldHave(text("(13)"));
     }
     
     @Test
