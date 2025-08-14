@@ -1,5 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * This project is licensed under the GNU General Public License v2.0 – see the LICENSE file for details.
  */
 
 package aqa.transport_tallinn_selenide;
