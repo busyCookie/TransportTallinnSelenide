@@ -14,9 +14,9 @@ import static com.codeborne.selenide.Selectors.byId;
  * @author busyCookie
  */
 public class BasePage {
+    //can not be filled in a template calss, because each page would have different button.
     public static SelenideElement returnButton;
     
-    //public SelenideElement homePageBody = $(".MapDisplayed.home");
     public static SelenideElement title = $("#divTitle");
     public static SelenideElement lanugageSelection = $("#divHeader").find(byId("divLang"));
     public static SelenideElement sidebar = $("#sidebar");

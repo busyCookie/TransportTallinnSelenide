@@ -52,7 +52,6 @@ public class LandingPageTest extends BaseTest {
         //check that home page is loaded
         landingPage.homePageBody.should(bePresent);
         
-        //homePage.title.should(exist).shouldBe(visible);
         landingPage.title.should(bePresent);
         landingPage.lanugageSelection.should(bePresent);
         landingPage.sidebar.should(bePresent);

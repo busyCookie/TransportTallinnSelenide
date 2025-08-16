@@ -7,6 +7,9 @@ package tests;
  * Using mostly specific imports, since this reduces chance of potential
  * interferance betwween objects from different APIs
  */
+//Java
+import java.util.regex.*;
+
 //Selenide
 import com.codeborne.selenide.Configuration;
 import static com.codeborne.selenide.Selenide.webdriver;
@@ -50,7 +53,6 @@ public class HomePageTest extends BaseTest {
         //check that home page is loaded
         homePage.homePageBody.should(bePresent);
         
-        //homePage.title.should(exist).shouldBe(visible);
         homePage.title.should(bePresent);
         homePage.lanugageSelection.should(bePresent);
         homePage.sidebar.should(bePresent);
@@ -69,21 +71,44 @@ public class HomePageTest extends BaseTest {
     @Test
     @Order(2)
     public void RoutesSearch() {
-        //for now tested with local variables
-        //should be updated to use test data in future
+        int searchStops = 0;
+        int searchLines = 0;
+        /* 
+         * regex is used to extract actual numerical value from serach result.
+         * it will brake is addutional numerical values will be added
+         *  to the same element.
+         * intially I wanted to use more precise regex, like \([\d+]\)
+         * but ultimatly decide that addition other number in search result header
+         * is less likely than change of the sting format.
+         * Pattern compilation is kept in the specific test, so to not waste time
+         * running other tests, at least until it will not be required in other tests.
+         */        
+        Pattern searchCountPattern = Pattern.compile("[\\d]+");
         
         homePage.lineSearchInput.should(exist);
         homePage.lineSearchInput.val("viru");
         homePage.lineSerachResult.should(bePresent);
-        homePage.lineSerachResultsTallinnCount.shouldHave(text("(21)"));
-        homePage.lineSerachResultsTallinnStopsCount.shouldHave(text("(8)"));
-        homePage.lineSerachResultsTallinnRoutesCount.shouldHave(text("(13)"));
+        
+        String searchStopsText = homePage.lineSerachResultsTallinnStopsCount.getText();
+        String searchLinesText = homePage.lineSerachResultsTallinnRoutesCount.getText();
+             
+        Matcher searchStopsMatcher = searchCountPattern.matcher(searchStopsText);
+        Matcher searchLinesMatcher = searchCountPattern.matcher(searchLinesText);
+        searchStopsMatcher.find();
+        searchLinesMatcher.find();
+        
+        searchStops = Integer.parseInt(searchStopsMatcher.group());
+        searchLines = Integer.parseInt(searchLinesMatcher.group());
+        
+        System.out.println(String.format("%d %d", searchStops, searchLines));
+                
+        homePage.lineSerachResultsTallinnCount.shouldHave(text(String.format("(%d)", searchStops + searchLines)));
+
     }
     
     @Test
     @Order(10)
     public void DefaultLanguage () {
-        //$("#divHeader").shouldHave(Condition.text("Avaleht"));
         homePage.title.shouldHave(text("Avaleht"));
         homePage.title.shouldNotHave(text("Home page"));
         homePage.title.shouldNotHave(text("Pääsivu"));
