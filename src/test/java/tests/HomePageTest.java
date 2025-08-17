@@ -123,7 +123,50 @@ public class HomePageTest extends BaseTest {
         homePage.transportSearchStopsList.get(0).shouldNotBe(visible);
         homePage.transportSearchLinesList.get(0).shouldNotBe(visible);
         homePage.transportSearchAddressList.get(0).shouldBe(visible);
-
+    }
+    
+        
+    @Test
+    @Order(11)
+    public void RoutesSearchTallinnChooseStop() {
+        
+    }
+    
+    @Test
+    @Order(12)
+    public void RoutesSearchTallinnChooseLine() {
+        
+    }
+    
+    @Test
+    @Order(12)
+    public void RoutesSearchTallinnChooseAddress() {
+        
+    }
+    
+    
+    @Test
+    @Order(20)
+    public void RoutesSearchHarju() {
+        
+    }
+    
+        @Test
+    @Order(21)
+    public void RoutesSearchHarjuChooseStop() {
+        
+    }
+    
+    @Test
+    @Order(22)
+    public void RoutesSearchHarjuChooseLine() {
+        
+    }
+    
+    @Test
+    @Order(23)
+    public void RoutesSearchHarjuChooseAddress() {
+        
     }
     
     @Test
