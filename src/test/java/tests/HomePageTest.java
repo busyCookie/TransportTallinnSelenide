@@ -75,13 +75,17 @@ public class HomePageTest extends BaseTest {
         int searchLines = 0;
         /* 
          * regex is used to extract actual numerical value from serach result.
-         * it will brake is addutional numerical values will be added
-         *  to the same element.
+         * it will brake if addutional numerical values will be added
+         * to the same element.
          * intially I wanted to use more precise regex, like \([\d+]\)
-         * but ultimatly decide that addition other number in search result header
+         * but ultimatly decide that addition of other number in search result
          * is less likely than change of the sting format.
          * Pattern compilation is kept in the specific test, so to not waste time
          * running other tests, at least until it will not be required in other tests.
+         * 
+         * In real testing project it should be more practical to have
+         * a staging enviroment with predictable test data, so it could be
+         * used directly in the test/ picked up from config/ picked up from DB.
          */        
         Pattern searchCountPattern = Pattern.compile("[\\d]+");
         
@@ -98,9 +102,7 @@ public class HomePageTest extends BaseTest {
         searchLinesMatcher.find();
         
         searchStops = Integer.parseInt(searchStopsMatcher.group());
-        searchLines = Integer.parseInt(searchLinesMatcher.group());
-        
-        System.out.println(String.format("%d %d", searchStops, searchLines));
+        searchLines = Integer.parseInt(searchLinesMatcher.group());     
                 
         homePage.lineSerachResultsTallinnCount.shouldHave(text(String.format("(%d)", searchStops + searchLines)));
 
