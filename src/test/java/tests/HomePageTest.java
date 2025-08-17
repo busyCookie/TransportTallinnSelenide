@@ -15,7 +15,10 @@ import com.codeborne.selenide.Configuration;
 import static com.codeborne.selenide.Selenide.webdriver;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.CollectionCondition.size;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.WebDriverConditions.url;
+
 
 //JUnit
 //import org.junit.jupiter.api.*;
@@ -69,8 +72,9 @@ public class HomePageTest extends BaseTest {
     }
     
     @Test
-    @Order(2)
-    public void RoutesSearch() {
+    @Order(10)
+    public void RoutesSearchTallinn() {
+        // I just don't like keep variables unnecessary uninitiated.
         int searchStops = 0;
         int searchLines = 0;
         /* 
@@ -89,27 +93,41 @@ public class HomePageTest extends BaseTest {
          */        
         Pattern searchCountPattern = Pattern.compile("[\\d]+");
         
-        homePage.lineSearchInput.should(exist);
-        homePage.lineSearchInput.val("viru");
-        homePage.lineSerachResult.should(bePresent);
+        homePage.transportSearchInput.should(exist);
+        homePage.transportSearchInput.val("viru");
+        homePage.transportSearchResult.should(bePresent);
         
-        String searchStopsText = homePage.lineSerachResultsTallinnStopsCount.getText();
-        String searchLinesText = homePage.lineSerachResultsTallinnRoutesCount.getText();
+        String searchStopsCountText = homePage.transportSerachTallinnStopsCount.getText();
+        String searchLinesCountText = homePage.transportSerachTallinnRoutesCount.getText();
              
-        Matcher searchStopsMatcher = searchCountPattern.matcher(searchStopsText);
-        Matcher searchLinesMatcher = searchCountPattern.matcher(searchLinesText);
+        Matcher searchStopsMatcher = searchCountPattern.matcher(searchStopsCountText);
+        Matcher searchLinesMatcher = searchCountPattern.matcher(searchLinesCountText);
         searchStopsMatcher.find();
         searchLinesMatcher.find();
         
         searchStops = Integer.parseInt(searchStopsMatcher.group());
         searchLines = Integer.parseInt(searchLinesMatcher.group());     
                 
-        homePage.lineSerachResultsTallinnCount.shouldHave(text(String.format("(%d)", searchStops + searchLines)));
+        homePage.transportSerachTallinnTotal.shouldHave(text(String.format("(%d)", searchStops + searchLines)));
+        homePage.transportSearchStopsList.shouldHave(size(searchStops));
+        homePage.transportSearchLinesList.shouldHave(size(searchLines));
+        
+        homePage.transportSearchStopsList.get(0).shouldBe(visible);
+        homePage.transportSearchLinesList.get(0).shouldNotBe(visible);
+        homePage.transportSearchAddressList.get(0).shouldNotBe(visible);
+        homePage.transportSerachTallinnRoutesCount.click();
+        homePage.transportSearchStopsList.get(0).shouldNotBe(visible);
+        homePage.transportSearchLinesList.get(0).shouldBe(visible);
+        homePage.transportSearchAddressList.get(0).shouldNotBe(visible);
+        homePage.transportSerachTallinnAddresses.click();
+        homePage.transportSearchStopsList.get(0).shouldNotBe(visible);
+        homePage.transportSearchLinesList.get(0).shouldNotBe(visible);
+        homePage.transportSearchAddressList.get(0).shouldBe(visible);
 
     }
     
     @Test
-    @Order(10)
+    @Order(99)
     public void DefaultLanguage () {
         homePage.title.shouldHave(text("Avaleht"));
         homePage.title.shouldNotHave(text("Home page"));
