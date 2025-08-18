@@ -24,7 +24,7 @@ public class HomePage extends BasePage {
     public SelenideElement transportMenu = areaMenu.find(byClassName("transport-navigation"));
     //public SelenideElement transportMenu = areaMenu.$(".transport-navigation");
     public SelenideElement travelPlanner = $("#divContentIndex.travel-planner");
-    public SelenideElement transportSearchInput = $(byXpath("//div[@id='divContentRoutes']//div[@class='search-stop']//input"));
+    public SelenideElement transportSearchInput = $(byXpath("//div[@id='divContentRoutes']//div[@class='travel-planner__location__search']//input"));
     public SelenideElement transportSearchResult = $(".searchData");
     public SelenideElement transportSerachTallinnTotal = transportSearchResult.find(byTitle("Tallinna Transport")).$(".total");
     public SelenideElement transportSerachTallinnStopsCount = transportSearchResult.find(byClassName("stops-number"));
@@ -35,7 +35,8 @@ public class HomePage extends BasePage {
     public ElementsCollection transportSearchAddressList = transportSearchResult.$$(".place");
     
     static {
-        returnButton = homeButton;
+        returnButton = areaMenuHomeButton;
+        returnButtonFallback = mainMenuHomeButton;
     }
     
 }

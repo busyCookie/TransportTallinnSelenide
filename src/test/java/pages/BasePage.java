@@ -16,13 +16,15 @@ import static com.codeborne.selenide.Selectors.byId;
 public class BasePage {
     //can not be filled in a template calss, because each page would have different button.
     public static SelenideElement returnButton;
+    public static SelenideElement returnButtonFallback;
     
     public static SelenideElement title = $("#divTitle");
     public static SelenideElement lanugageSelection = $("#divHeader").find(byId("divLang"));
     public static SelenideElement sidebar = $("#sidebar");
     public static SelenideElement areaMenu = sidebar.find(byId("areaMenuContainer"));
-    public static SelenideElement homeButton = areaMenu.$(".icon_home");
+    public static SelenideElement areaMenuHomeButton = areaMenu.$(".icon_home");
     public static SelenideElement mainMenu = sidebar.find(byId("mainMenu"));
+    public static SelenideElement mainMenuHomeButton = mainMenu.$(".icon_home");
     public static SelenideElement infoMenu = sidebar.find(byId("infoMenu"));
     public static SelenideElement map = $("#divMapWrapper");
   
@@ -33,6 +35,12 @@ public class BasePage {
          
    public BasePage refresh() {
         Selenide.refresh();
+        return this;
+    }
+   
+    public BasePage reopen() {
+        Selenide.closeWebDriver();
+        Selenide.open("");
         return this;
     }
 }

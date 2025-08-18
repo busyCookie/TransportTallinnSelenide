@@ -15,6 +15,7 @@ import static com.codeborne.selenide.Condition.and;
 import static com.codeborne.selenide.Condition.be;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
+import com.codeborne.selenide.ex.UIAssertionError;
 
 //JUnit
 //import org.junit.jupiter.api.*;
@@ -49,14 +50,18 @@ public class BaseTest {
     
     @AfterEach
     public void ReturnToTestPage() {
-        System.out.println("Return to test page is called");
-
         if ( !WebDriverRunner.url().equals(Configuration.baseUrl) ) {
             try {
-                currentPage.returnButton.click();
-            } catch (Exception e) {
-                System.out.println("Page button is not defined");
+                if (currentPage.returnButton.isDisplayed()) {
+                    currentPage.returnButton.click();
+                } else {
+                    currentPage.returnButtonFallback.click();
+                }
+            } catch (UIAssertionError e) {
+                System.out.println("Page return button is not defined or absent from page");
                 e.printStackTrace();
+                System.out.println("Reopening the page");
+                currentPage.reopen();
             }
         }
     }
