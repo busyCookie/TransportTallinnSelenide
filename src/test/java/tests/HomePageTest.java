@@ -8,7 +8,6 @@ package tests;
  * interferance betwween objects from different APIs
  */
 //Java
-import com.codeborne.selenide.ClickOptions;
 import java.util.regex.*;
 
 //Selenide
@@ -20,8 +19,7 @@ import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.WebDriverConditions.url;
 import static com.codeborne.selenide.WebDriverConditions.urlStartingWith;
-
-
+import com.codeborne.selenide.junit5.TextReportExtension;
 
 //JUnit
 //import org.junit.jupiter.api.*;
@@ -30,7 +28,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import com.codeborne.selenide.junit5.TextReportExtension;
 
 //local
 import pages.HomePage;

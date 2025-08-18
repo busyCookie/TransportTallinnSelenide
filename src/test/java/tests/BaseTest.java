@@ -9,19 +9,18 @@ package tests;
  */
 //Selenide
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebElementCondition;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.WebElementCondition;
+import com.codeborne.selenide.ex.UIAssertionError;
 import static com.codeborne.selenide.Condition.and;
 import static com.codeborne.selenide.Condition.be;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
-import com.codeborne.selenide.ex.UIAssertionError;
 
 //JUnit
 //import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterEach;
-
 import org.junit.jupiter.api.TestInstance;
 
 //local

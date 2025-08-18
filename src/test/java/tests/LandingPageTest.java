@@ -56,7 +56,7 @@ public class LandingPageTest extends BaseTest {
         landingPage.lanugageSelection.should(bePresent);
         landingPage.sidebar.should(bePresent);
         landingPage.areaMenu.should(bePresent);
-        landingPage.homeButton.should(bePresent);
+        landingPage.areaMenuHomeButton.should(bePresent);
         landingPage.transportMenu.should(bePresent);
         landingPage.travelPlanner.should(bePresent);
         landingPage.transportMenu.should(bePresent);

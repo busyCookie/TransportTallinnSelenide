@@ -3,7 +3,7 @@
  */
 package pages;
 
-//Selenide
+// Selenide
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ElementsCollection;
 import static com.codeborne.selenide.Selenide.$;
@@ -12,6 +12,7 @@ import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selectors.byTitle;
 import static com.codeborne.selenide.Selectors.byClassName;
 
+// Local
 import pages.BasePage;
 
 
