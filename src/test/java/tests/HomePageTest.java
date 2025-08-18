@@ -8,6 +8,7 @@ package tests;
  * interferance betwween objects from different APIs
  */
 //Java
+import com.codeborne.selenide.ClickOptions;
 import java.util.regex.*;
 
 //Selenide
@@ -18,6 +19,8 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.WebDriverConditions.url;
+import static com.codeborne.selenide.WebDriverConditions.urlStartingWith;
+
 
 
 //JUnit
@@ -60,7 +63,7 @@ public class HomePageTest extends BaseTest {
         homePage.lanugageSelection.should(bePresent);
         homePage.sidebar.should(bePresent);
         homePage.areaMenu.should(bePresent);
-        homePage.homeButton.should(bePresent);
+        homePage.areaMenuHomeButton.should(bePresent);
         homePage.transportMenu.should(bePresent);
         homePage.travelPlanner.should(bePresent);
         homePage.transportMenu.should(bePresent);
@@ -123,25 +126,43 @@ public class HomePageTest extends BaseTest {
         homePage.transportSearchStopsList.get(0).shouldNotBe(visible);
         homePage.transportSearchLinesList.get(0).shouldNotBe(visible);
         homePage.transportSearchAddressList.get(0).shouldBe(visible);
+        
+        //reverting search state
+        homePage.transportSerachTallinnStopsCount.click();
+        homePage.transportSearchInput.clear();
     }
     
         
     @Test
     @Order(11)
     public void RoutesSearchTallinnChooseStop() {
-        
+        homePage.transportSearchInput.should(exist);
+        homePage.transportSearchInput.val("viru");
+        homePage.transportSearchStopsList.get(0).$("a").click();
+        webdriver().shouldHave(urlStartingWith("https://transport.tallinn.ee/#stop"));
     }
     
     @Test
     @Order(12)
     public void RoutesSearchTallinnChooseLine() {
-        
+        homePage.transportSearchInput.should(exist);
+        homePage.transportSearchInput.val("viru");
+        homePage.transportSerachTallinnRoutesCount.click();
+        homePage.transportSearchLinesList.get(0).$("a").click();
+        webdriver().shouldHave(urlStartingWith("https://transport.tallinn.ee/#bus"));
     }
     
     @Test
     @Order(12)
     public void RoutesSearchTallinnChooseAddress() {
-        
+        homePage.transportSearchInput.should(exist);
+        homePage.transportSearchInput.val("viru");
+        homePage.transportSerachTallinnAddresses.click();
+        homePage.transportSearchAddressList.get(0).$("a").click();
+        homePage.transportSearchAddressList.get(0).$(".stopslist").isDisplayed();
+        //reverting search state
+        homePage.transportSerachTallinnStopsCount.click();
+        homePage.transportSearchInput.clear();
     }
     
     
