@@ -3,6 +3,8 @@ temp/
 *.log
 
 # Maven
+.mvn
+mvn*
 log/
 target/
 build/
