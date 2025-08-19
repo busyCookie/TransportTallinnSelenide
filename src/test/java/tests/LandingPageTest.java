@@ -7,7 +7,7 @@ package tests;
  * Using mostly specific imports, since this reduces chance of potential
  * interferance betwween objects from different APIs
  */
-//Selenide
+// Selenide
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebElementCondition;
 import static com.codeborne.selenide.Selenide.webdriver;
@@ -17,8 +17,7 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.WebDriverConditions.url;
 
-//JUnit
-//import org.junit.jupiter.api.*;
+// JUnit
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Order;
 

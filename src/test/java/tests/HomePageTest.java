@@ -97,8 +97,8 @@ public class HomePageTest extends BaseTest {
         homePage.transportSearchInput.val("viru");
         homePage.transportSearchResult.should(bePresent);
         
-        String searchStopsCountText = homePage.transportSerachTallinnStopsCount.getText();
-        String searchLinesCountText = homePage.transportSerachTallinnRoutesCount.getText();
+        String searchStopsCountText = homePage.transportSearchStopsCount.getText();
+        String searchLinesCountText = homePage.transportSearchLinesCount.getText();
              
         Matcher searchStopsMatcher = searchCountPattern.matcher(searchStopsCountText);
         Matcher searchLinesMatcher = searchCountPattern.matcher(searchLinesCountText);
@@ -108,24 +108,24 @@ public class HomePageTest extends BaseTest {
         searchStops = Integer.parseInt(searchStopsMatcher.group());
         searchLines = Integer.parseInt(searchLinesMatcher.group());     
                 
-        homePage.transportSerachTallinnTotal.shouldHave(text(String.format("(%d)", searchStops + searchLines)));
+        homePage.transportSearchTallinnTotal.shouldHave(text(String.format("(%d)", searchStops + searchLines)));
         homePage.transportSearchStopsList.shouldHave(size(searchStops));
         homePage.transportSearchLinesList.shouldHave(size(searchLines));
         
         homePage.transportSearchStopsList.get(0).shouldBe(visible);
         homePage.transportSearchLinesList.get(0).shouldNotBe(visible);
         homePage.transportSearchAddressList.get(0).shouldNotBe(visible);
-        homePage.transportSerachTallinnRoutesCount.click();
+        homePage.transportSearchLinesCount.click();
         homePage.transportSearchStopsList.get(0).shouldNotBe(visible);
         homePage.transportSearchLinesList.get(0).shouldBe(visible);
         homePage.transportSearchAddressList.get(0).shouldNotBe(visible);
-        homePage.transportSerachTallinnAddresses.click();
+        homePage.transportSearchAddresses.click();
         homePage.transportSearchStopsList.get(0).shouldNotBe(visible);
         homePage.transportSearchLinesList.get(0).shouldNotBe(visible);
         homePage.transportSearchAddressList.get(0).shouldBe(visible);
         
         //reverting search state
-        homePage.transportSerachTallinnStopsCount.click();
+        homePage.transportSearchStopsCount.click();
         homePage.transportSearchInput.clear();
     }
     
@@ -144,7 +144,7 @@ public class HomePageTest extends BaseTest {
     public void RoutesSearchTallinnChooseLine() {
         homePage.transportSearchInput.should(exist);
         homePage.transportSearchInput.val("viru");
-        homePage.transportSerachTallinnRoutesCount.click();
+        homePage.transportSearchLinesCount.click();
         homePage.transportSearchLinesList.get(0).$("a").click();
         webdriver().shouldHave(urlStartingWith("https://transport.tallinn.ee/#bus"));
     }
@@ -154,11 +154,11 @@ public class HomePageTest extends BaseTest {
     public void RoutesSearchTallinnChooseAddress() {
         homePage.transportSearchInput.should(exist);
         homePage.transportSearchInput.val("viru");
-        homePage.transportSerachTallinnAddresses.click();
+        homePage.transportSearchAddresses.click();
         homePage.transportSearchAddressList.get(0).$("a").click();
         homePage.transportSearchAddressList.get(0).$(".stopslist").isDisplayed();
         //reverting search state
-        homePage.transportSerachTallinnStopsCount.click();
+        homePage.transportSearchStopsCount.click();
         homePage.transportSearchInput.clear();
     }
     
@@ -166,24 +166,82 @@ public class HomePageTest extends BaseTest {
     @Test
     @Order(20)
     public void RoutesSearchHarju() {
+        int searchStops = 0;
+        int searchLines = 0;
+     
+        Pattern searchCountPattern = Pattern.compile("[\\d]+");
         
+        homePage.transportSearchInput.should(exist);
+        homePage.transportSearchInput.val("Maardu");
+        homePage.transportSearchResult.should(bePresent);
+        homePage.transportSearchHarjuTotal.click();
+        
+        String searchStopsCountText = homePage.transportSearchStopsCount.getText();
+        String searchLinesCountText = homePage.transportSearchLinesCount.getText();
+             
+        Matcher searchStopsMatcher = searchCountPattern.matcher(searchStopsCountText);
+        Matcher searchLinesMatcher = searchCountPattern.matcher(searchLinesCountText);
+        searchStopsMatcher.find();
+        searchLinesMatcher.find();
+        
+        searchStops = Integer.parseInt(searchStopsMatcher.group());
+        searchLines = Integer.parseInt(searchLinesMatcher.group());     
+                
+        homePage.transportSearchHarjuTotal.shouldHave(text(String.format("(%d)", searchStops + searchLines)));
+        homePage.transportSearchStopsList.shouldHave(size(searchStops));
+        homePage.transportSearchLinesList.shouldHave(size(searchLines));
+        
+        homePage.transportSearchStopsList.get(0).shouldBe(visible);
+        homePage.transportSearchLinesList.get(0).shouldNotBe(visible);
+        homePage.transportSearchAddressList.get(0).shouldNotBe(visible);
+        homePage.transportSearchLinesCount.click();
+        homePage.transportSearchStopsList.get(0).shouldNotBe(visible);
+        homePage.transportSearchLinesList.get(0).shouldBe(visible);
+        homePage.transportSearchAddressList.get(0).shouldNotBe(visible);
+        homePage.transportSearchAddresses.click();
+        homePage.transportSearchStopsList.get(0).shouldNotBe(visible);
+        homePage.transportSearchLinesList.get(0).shouldNotBe(visible);
+        homePage.transportSearchAddressList.get(0).shouldBe(visible);
+        
+        //reverting search state
+        homePage.transportSearchStopsCount.click();
+        homePage.transportSearchInput.clear();
     }
     
         @Test
     @Order(21)
     public void RoutesSearchHarjuChooseStop() {
-        
+        homePage.transportSearchInput.should(exist);
+        homePage.transportSearchInput.val("Maardu");
+        homePage.transportSearchHarjuTotal.click();
+        homePage.transportSearchStopsList.get(0).$("a").click();
+        webdriver().shouldHave(urlStartingWith("https://transport.tallinn.ee/#stop"));
     }
     
     @Test
     @Order(22)
     public void RoutesSearchHarjuChooseLine() {
+        homePage.transportSearchInput.should(exist);
+        homePage.transportSearchInput.val("Maardu");
+        homePage.transportSearchHarjuTotal.click();
+        homePage.transportSearchLinesCount.click();
+        homePage.transportSearchLinesList.get(0).$("a").click();
+        webdriver().shouldHave(urlStartingWith("https://transport.tallinn.ee/#harju/regionalbus/"));
         
     }
     
     @Test
     @Order(23)
     public void RoutesSearchHarjuChooseAddress() {
+        homePage.transportSearchInput.should(exist);
+        homePage.transportSearchInput.val("Maardu");
+        homePage.transportSearchHarjuTotal.click();
+        homePage.transportSearchAddresses.click();
+        homePage.transportSearchAddressList.get(0).$("a").click();
+        homePage.transportSearchAddressList.get(0).$(".stopslist").isDisplayed();
+        //reverting search state
+        homePage.transportSearchStopsCount.click();
+        homePage.transportSearchInput.clear();
         
     }
     
